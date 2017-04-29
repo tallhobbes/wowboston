@@ -1,0 +1,120 @@
+body{
+  font-family: 'Montserrat', sans-serif;
+  background-color: grey;
+}
+
+#cesiumContainer{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  font-family: sans-serif;
+}
+#parChart{
+width: 95%;
+height: 400;
+margin: auto;
+}
+#linesEtc{
+  width:100%;
+  padding-top: 10px;
+  padding-bottom: 7px;
+  background: rgba(0,0,0,1);
+  border-style: solid;
+  border-width: 1.5px;
+  border-color-top: rgba(100,100,100,.6);
+  color: #333;
+  z-index: 0;
+}
+#slidingPanel {
+  position: fixed;
+  top: 100%;
+  width: 100%;
+  left: 0;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  overflow: auto;
+
+}
+
+#slidingPanel.on {
+
+}
+
+#pulltab{
+  padding-left: 17px;
+  padding-right: 17px;
+  padding-top: 10px;
+  padding-bottom: 7px;
+  position: relative;
+  top:2px;
+  left: 10px;
+  width: 30px;
+  height: 20px;
+  background: rgba(100,100,100,.6);
+  display: table;
+  border-style: none;
+  border-width: 1.5px ;
+  border-color: rgba(100,100,100,.6);
+  border-bottom-color: rgb(0,0,0);
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+  cursor: pointer;
+  color: white;
+  transition: all .3s;
+  z-index:1;
+}
+
+#pulltab .fa{
+  -ms-transform: rotate(0deg); /* IE 9 */
+  -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+  transform: rotate(0deg);
+  transition: transform .3s;
+}
+#pulltab .icon{
+  display: table-cell;
+  text-align: left;
+  vertical-align: middle;
+}
+#pulltab:hover .icon{
+  color: #73c5f3;
+}
+#pulltab.on{
+  background: rgba(0,0,0,.6);
+  width: 270px;
+  border-style: solid;
+}
+#pulltab.on .fa{
+  -ms-transform: rotate(180deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+  transform: rotate(180deg);
+}
+#entityStats{
+  width: 350px;
+  //height: 10px;
+  display: none;
+  //background-color: yellow;
+  margin: 7px;
+  font-size: 11px;
+}
+.on #entityStats{
+  display: table-cell;
+  text-align: right;
+  vertical-align: middle;
+}
+#entityStats > div{
+  height: 14px;
+  overflow: hidden;
+}
+#topStrip {
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}

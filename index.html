@@ -1,0 +1,50 @@
+<!DOCTYPE <html>
+<head>
+	<title>serf boston</title>
+	<link rel='stylesheet' href='css/d3.parcoords.css'>
+	<link rel='stylesheet' href='css/widgets.css'>
+	<link rel='stylesheet' href='css/style.css'>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
+	<script src='//bostondata.azureedge.net/bostondata/js/Cesium.js'></script>
+	<script src='/js/async.min.js'></script>
+	<script src='js/d3.parcoords.js'></script>
+	<script src='js/datafilter.js'></script>
+	<script src='js/globeview.js'></script>
+	<script src='/js/app.js'></script>
+	<style>
+
+	</style>
+</head>
+
+<body>
+<div id="cesiumContainer">
+</div>
+<div id='topStrip'>
+	
+</div>
+<div id='slidingPanel'>
+	<div id='pulltab' onclick='toggleSlidingPanel()'>
+		<div class='icon'><div style='text-align: center; width:30px'><i class="fa fa-chevron-up fa-1x"></i></div></div>
+		<div id='entityStats'>
+			<div>
+				Selected: <span id='entValSel'>0</span>  
+				Displayed: <span id='entValDisp'>0</span>  
+				Limit: <span id='entValLim'>1000</span>
+			</div>
+		</div>
+	</div>
+	<div id='linesEtc'>
+		<div id="parchart" class='parcoords'></div>
+		<div id='buttonset'>
+			<button class='cesium-button cesium-button-toolbar' onclick='enhance(subdata)'>ENHANCE</button>
+			<button class='cesium-button cesium-button-toolbar' onclick='enhance(fulldata)'>reset</button>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>
