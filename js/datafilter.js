@@ -130,7 +130,7 @@ var runParChart = function(){
   //console.log(range);
 	
 	// d3.csv('../data/lilparallel.csv', function(data){
-	d3.csv('../data/rental_filters.csv', function(data){
+	d3.csv('//bostondata.azureedge.net/bostondata/data/rental_filters.csv', function(data){
 		renderPar(data);
 	});
 }
