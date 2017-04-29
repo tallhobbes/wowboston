@@ -200,7 +200,7 @@ var createLinkDict = function(){
   var report = function(){
     console.log('linkDict done');
   }
-	d3.csv('//bostondata.azureedge.net/bostondata/data/rental_links.csv', function(data){
+	d3.csv('//bostondata2.azureedge.net/bostondata/data/rental_links.csv', function(data){
 		//console.log(data[0]);
 		data.forEach(function(d,i){
 			if(i<30){
