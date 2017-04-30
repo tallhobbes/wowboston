@@ -7,5 +7,6 @@ ehthumbs.db
 Thumbs.db
 
 data/
+data2/
 !js/
 js/*/
