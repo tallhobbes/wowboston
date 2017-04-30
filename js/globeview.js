@@ -13,39 +13,43 @@ Cesium.InfoBoxViewModel.defaultSanitizer = function(rawHtml) {
 
 
 var runCesium = function(){
-    viewer = new Cesium.Viewer("cesiumContainer", {
-    timeline: false,
-    animation: false,
-    baseLayerPicker: false, // Only showing one layer in this demo
-    //useDefaultRenderLoop : false,
-    //homeButton:false,
-    fullscreenButton: false,
-    geocoder: false,
-    selectionIndicator: false,
-    infoBox: false,
-    sceneModePicker: false,
-    navigationHelpButton: true,
-    imageryProvider: basemapProvider,
-    navigationInstructionsInitiallyVisible: false,
-    skyAtmosphere: false,
-    scene3DOnly: true
-  	});
-    viewer.scene.globe.enableLighting = false;
+  var homeRect = Cesium.Rectangle.fromDegrees(-71.23, 42.215, -70.997, 42.4);
+
+  Cesium.Camera.DEFAULT_VIEW_RECTANGLE = homeRect;
+  Cesium.Camera.DEFAULT_VIEW_FACTOR = 0.001;
+  viewer = new Cesium.Viewer("cesiumContainer", {
+  timeline: false,
+  animation: false,
+  baseLayerPicker: false, // Only showing one layer in this demo
+  //useDefaultRenderLoop : false,
+  //homeButton:false,
+  fullscreenButton: false,
+  geocoder: false,
+  selectionIndicator: false,
+  infoBox: false,
+  sceneModePicker: false,
+  navigationHelpButton: true,
+  imageryProvider: basemapProvider,
+  navigationInstructionsInitiallyVisible: false,
+  skyAtmosphere: false,
+  scene3DOnly: true
+	});
+  viewer.scene.globe.enableLighting = false;
 
 
-    var terrainProvider = new Cesium.CesiumTerrainProvider({
-        url: '//assets.agi.com/stk-terrain/world',
-        credit: '',
-        requestWaterMask: true
-    });
-    //viewer.terrainProvider = terrainProvider;
+  var terrainProvider = new Cesium.CesiumTerrainProvider({
+      url: '//assets.agi.com/stk-terrain/world',
+      credit: '',
+      requestWaterMask: true
+  });
+  //viewer.terrainProvider = terrainProvider;
 
-    viewer.scene.globe.depthTestAgainstTerrain = false;
+  viewer.scene.globe.depthTestAgainstTerrain = false;
 
-    viewer.scene.frameState.creditDisplay._imageContainer.style.display = 'none';
-    viewer.scene.frameState.creditDisplay._textContainer.style.display = 'none';
+  viewer.scene.frameState.creditDisplay._imageContainer.style.display = 'none';
+  viewer.scene.frameState.creditDisplay._textContainer.style.display = 'none';
 
-    linematerial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.WHITE.withAlpha(.3))
+  linematerial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.WHITE.withAlpha(.3))
 
 }
 var test;
@@ -61,7 +65,7 @@ var showLinks = function(linkIDs){
     showEntities,
 		createEntities
 		]);
-  setTimeout(function(){viewer.flyTo(viewer.entities)}, 1000);
+  //setTimeout(function(){viewer.flyTo(viewer.entities)}, 1000);
 }
 //take requested list of links and sort into present and missing links
 var sortEntities = function(linkIDs,cb){
