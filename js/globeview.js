@@ -61,6 +61,7 @@ var showLinks = function(linkIDs){
     showEntities,
 		createEntities
 		]);
+  setTimeout(function(){viewer.flyTo(viewer.entities)}, 1000);
 }
 //take requested list of links and sort into present and missing links
 var sortEntities = function(linkIDs,cb){
@@ -162,11 +163,11 @@ var createEntity = function(linkID){
   }
 	//console.log('creating entity??')
 	var d = link_dict[linkID];
-	['x_own','y_own','x_prop','y_prop','dist'].forEach(function(val){
+	['x_own','y_own','x_mid','y_mid','x_prop','y_prop','dist'].forEach(function(val){
 		d[val] = parseFloat(d[val]);
 	});
-  var mid_x = (parseFloat(d.x_prop)+parseFloat(d.x_own))/2;
-  var mid_y = (parseFloat(d.y_prop)+parseFloat(d.y_own))/2;
+  //var mid_x = (parseFloat(d.x_prop)+parseFloat(d.x_own))/2;
+  //var mid_y = (parseFloat(d.y_prop)+parseFloat(d.y_own))/2;
   var mid_z = parseFloat(d.dist)*10000 + 20;
 
   //var showit = i<showlimit;
@@ -182,7 +183,7 @@ var createEntity = function(linkID){
       polyline : {
           positions: [
           Cesium.Cartesian3.fromDegrees(d.x_prop, d.y_prop, 0),
-          Cesium.Cartesian3.fromDegrees(mid_x, mid_y, mid_z),
+          Cesium.Cartesian3.fromDegrees(d.x_mid, d.y_mid, mid_z),
           Cesium.Cartesian3.fromDegrees(d.x_own, d.y_own, 0)
           ],
           width: 5,

@@ -1,26 +1,79 @@
 var pc,dims,fulldata,subdata,range;
 
-var	dims = {
-		"zip_prop_num":{
-			axtype:'test',
-			ticks: 10,
-			tickFormatCode: [2,'05f0'],
-			title:'Property Zip Code',
-		},
-		'AV_TOTAL':{
-			title:'Total Value',
-		},
-		'zip_own_num':{
-			title:'Owner Zip Code',
-			ticks: 10,
-			tickFormatCode: [20,'05'],
+var	alldims = {
+	"zip_prop_txt":{
+		axtype:'test',
+		scaletype:'ordinal',
+		title:'Property Zip Code',
+		num_tics:10,
+	},
+	'AV_TOTAL':{
+		title:'Total Value',
+	},
+	'zip_own_num':{
+		title:'Owner Zip Code',
+		ticks: 10,
+		tickFormatCode: [20,'05'],
 
-		},
-		'MAILING_NEIGHBORHOOD':{
-			title: 'Neighborhood',
-			scaletype: 'ordinal'
-		}
+	},
+	'MAILING_NEIGHBORHOOD':{
+		title: 'Neighborhood',
+		scaletype: 'ordinal',
+		flipscale: true
+	},
+	'PropType':{
+		title:'Property Category',
+		scaletype: 'ordinal',
+		flipscale: true,
+
+	},
+	'LU_type':{
+		title:'Property Type',
+		scaletype:'ordinal',
+		flipscale: true
+	},
+	'dist_mi':{
+		title: 'Owner Distance',
 	}
+}
+
+dims = alldims; 
+
+var selectDims = function(newDims, cb){
+	var currentDims = d3.keys(dims);
+	var oldDims = currentDims;
+	//treat selected list as to-add list
+	//eliminate selected variables that are already in dims
+	currentDims.forEach(function(dim){
+		var index = newDims.indexOf(dim);
+		if(index > -1){
+			//if selected dim is already present in graphed dims, eliminate from to-add list
+			newDims = newDims.slice(0,index).concat(newDims.slice(index+1, newDims.length));
+			//as well as from to-delete list
+			oldDims = oldDims.slice(0,index).concat(oldDims.slice(index+1, oldDims.length));
+		}
+	});
+	oldDims.forEach(function(dim){
+		delete dims[dim];
+	});
+
+	newDims.forEach(function(dim){
+		dims[dim] = alldims[dim];
+	});
+	cb(dims);
+}
+
+var redrawDims = function(dimset){
+	dims = dimset;
+	pc.dimensions(dims);
+	pc.createAxes();
+	pc.render();
+}
+
+var updateDims = function(selected){
+	selectDims(selected, redrawDims);
+}
+
 //random sampling to see if column is numbers stored as strings
 var numberCheck = function(data, key, n, threshold){
 	var n2 = n;
@@ -50,10 +103,11 @@ var modifyScales = function(data){
 		//set domains for type: if linear: min and max; if ordinal: all levels;
 		if(scaletype==='linear'){
 			newdomain = d3.extent(data, function(d){return +d[dim]});
-			//console.log(dim+newdomain);
+			console.log(dim+newdomain);
 		} else {
-			newdomain = d3.map(data, function(d){return d[dim];}).keys().sort().reverse();
-			//console.log(newdomain);
+			newdomain = d3.map(data, function(d){return d[dim];}).keys().sort();
+			if(thisdim.flipscale) newdomain = newdomain.reverse();
+			console.log(newdomain);
 		}
 		//console.log(dim+newdomain);
 		////Setting variables
@@ -62,12 +116,23 @@ var modifyScales = function(data){
 			//console.log('creating new yscale '+dim+' '+scaletype);	
 			thisdim.yscale = d3.scale[scaletype]().domain(newdomain);
 			if(scaletype=='linear'){
-				thisdim.yscale.range([349,1]);
+				thisdim.yscale.range([349,4]);
+				console.log(dim, newdomain);
 			} else {
-				thisdim.yscale.rangePoints([349,1]);
+				thisdim.yscale.rangePoints([349,4]);
 			}
 		} else {
-			thisdim.yscale.domain(newdomain);
+			if(scaletype==='linear'){
+				if(newdomain[0]===newdomain[1]){
+					thisdim.tickValues = [newdomain[0]];
+					newdomain[0] = newdomain[0]-10;
+					newdomain[1] = newdomain[1]+10;
+				}else{
+					thisdim.tickValues = null;
+				}
+			}
+			thisdim.yscale.domain(newdomain)
+
 		};
 		//if tickFormatCode exists, set it
 		if(typeof(dims[dim].tickFormatCode)!=='undefined'){
@@ -78,6 +143,13 @@ var modifyScales = function(data){
 		} else {
 			//console.log('updating existing scale')
 			dims[dim].yscale.domain(newdomain)
+			if(scaletype==='ordinal'){
+				thisdim.tickValues = (newdomain.filter(function(d,i){
+					return(!(i%Math.floor(newdomain.length/10)))
+				}));
+			}
+
+			console.log('tickvalues are',thisdim.yscale.tickValues);
 		}
 	});
 
@@ -149,3 +221,4 @@ var pauseParChart = function(seconds){
         }
     }
 }
+

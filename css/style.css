@@ -23,7 +23,7 @@ margin: auto;
   width:100%;
   padding-top: 10px;
   padding-bottom: 7px;
-  background: rgba(0,0,0,1);
+  background: rgba(0,0,0,.8);
   border-style: solid;
   border-width: 1.5px;
   border-color-top: rgba(100,100,100,.6);
@@ -117,4 +117,50 @@ margin: auto;
   position: absolute;
   top: 5px;
   left: 5px;
+}
+
+#dimensionSelectPanel {
+  display: block;
+  position: absolute;
+  background-color: rgba(0,0,0,.8);
+  margin: auto;
+  z-index: 2;
+  font-size: 14px;
+  color: white;
+  border-style: solid;
+  border-color: white;
+  padding: 4px;
+}
+
+.dimensionItem {
+  margin: auto;
+  background-color: black;
+  display: table;
+}
+.dimensionItem:hover{
+  background-color: rgba(110,110,110,.9);
+} 
+
+.dimensionItem > div{
+  vertical-align: middle;
+  padding: 5px;
+  display: table-cell;
+}
+.dimensionLabel {
+  text-align: left;
+  width: 150px;
+}
+.dimensionIcon {
+
+}
+
+.dimensionItem i{
+  opacity: 0;
+}
+.dimensionItem.selected i {
+  opacity: 1;
+}
+
+#dimensionSelectPanel.hide{
+  display: none;
 }
