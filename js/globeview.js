@@ -281,3 +281,9 @@ var delTest = function(){
     console.log('afterwards entity length is:', viewer.entities.values.length);
   }]);
 }
+
+var hideAll = function(){
+  viewer.entities.values.forEach(function(ent){
+    ent.show=false;
+  })
+}

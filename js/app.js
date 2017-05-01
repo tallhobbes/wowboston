@@ -26,6 +26,8 @@ var setSlidingPanelHeight = function(){
     } else {
         ypos = window.innerHeight-document.getElementById('pulltab').offsetHeight;
         d3.select('#slidingPanel').style('top',ypos);
+        d3.select('#dimensionSelectPanel').classed('hide',true);
+        d3.select('#filterbutton').classed('on',false);
     }
 }
 
