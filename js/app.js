@@ -160,3 +160,8 @@ var toggleAuto = function(action){
         d3.select('#zoombutton').classed('auto', auto.zoom);
     }
 }
+
+var togglePopup = function(){
+    var status = d3.select('#popupbg').classed('show');
+    d3.select('#popupbg').classed('show', !status);
+}

@@ -8,7 +8,15 @@ body{
   -ms-user-select: none;
   user-select: none;
 }
-
+a{
+  color: white;
+}
+a:visited{
+  color:white;
+}
+a:hover{
+  color:white;
+}
 #cesiumContainer{
   position: absolute;
   top: 0;
@@ -123,10 +131,12 @@ margin: auto;
   overflow: hidden;
 }
 #topStrip {
-  display: block;
+  display: inline;
   position: absolute;
   top: 5px;
   left: 5px;
+  width: 0px;
+  height: 0px;
 }
 
 #dimensionSelectPanel {
@@ -273,4 +283,110 @@ margin: auto;
 .pretty-scroll::-webkit-scrollbar-thumb
 {
   background-color: rgba(55,55,55,.9);
+}
+
+#popupbg{
+  position:absolute;
+  width:100%;
+  height:100%;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  background-color: rgba(0,0,0,.8);
+  display: none;
+}
+
+#popupbg.show{
+  display: inline;
+}
+
+#popupbox{
+  position: absolute;
+  width: 700px;
+  height: 750px;
+  top: 50%;
+  left: 50%;
+  margin: -375px 0 0 -350px;
+  background-color: rgba(42,42,42,.9);
+  border-radius: 10px;
+  color:white;
+}
+
+#popupcontents{
+  width:680px;
+  position:relative;
+  padding: 0px 10px;
+}
+#logobanner{
+  width: 563px;
+  position: relative;
+  z-index:3;
+  margin: 10px auto 5px;
+}
+#openingblurb{
+  margin:0px auto;
+  font-size: 18px;
+  padding: 0px 15px 10px;
+  line-height: 1.5em;
+  text-align: center;
+}
+#explainblurb{
+  position:relative;
+  width:660;
+  margin: 0px auto;
+  display: table;
+}
+.explainpanel{
+  display: table-cell;
+  width: 210px;
+  height: 170px;
+  text-align: center;
+  font-size: 14px;
+}
+#teaserblurb{
+  width: 660px;
+  margin: 10px auto 20px;
+  font-size: 18px;
+  line-height: 1.8em;
+  border: 0px;
+  border-bottom: 1px;
+  border-style: solid;
+  padding-bottom: 15px;
+  text-align: center;
+}
+.teaseritem{
+  text-align: left;
+  padding: 3px 15px;
+  line-height: 1em;
+  font-size: 15px;
+  width: 530px;
+  margin: 0px auto;
+
+}
+#closingblurb{
+  width: 610px;
+  margin:0px auto;
+  font-size: 18px;
+  text-align: center;
+}
+#footerbutton{
+  font-size: 22px;
+  background-color: rgba(80,80,80,.4);
+  height: 30px;
+  width: 300px;
+  text-align: center;
+  margin: 10px auto;
+  padding: 5px;
+  border-style: solid;
+  border-width: 0px 8px;
+  border-color: rgba(0,102,155,.9);;
+  border-radius: 10px;
+  cursor: pointer;
+}
+#footerbutton:hover {
+  background-color: rgba(0,102,155,.9);
+  color:white;
+}
+#lillogo{
+  cursor: pointer;
 }

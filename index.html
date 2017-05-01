@@ -23,7 +23,7 @@
 <div id="cesiumContainer">
 </div>
 <div id='topStrip'>
-	
+	<div id='lillogo' onclick='togglePopup()'><img src='img/WOWlogo-noArrow.png' width=132px height=30px></div>
 </div>
 <div id='slidingPanel'>
 	<div id='pulltab'>
@@ -70,7 +70,54 @@
 	</div>
 	<div id='dimensionUpdateButton' class='fancy-button' onclick='activateNewDims()'>UPDATE</div>
 </div>
+<div id='popupbg' class='show'>
+	<div id='popupbox'>
+		<div id='popupcontents'>
 
+			<div id='logobanner'><img width='563px' height='172px' src='img/WOWlogo.png'></div>
+			<div id='openingblurb'>
+				By mapping and filtering the <a href='https://data.boston.gov/dataset/property-assessment/resource/062fc6fa-b5ff-4270-86cf-202225e40858'>Boston property assessment dataset</a> , you can use a simple relationship - Who Owns What? - to explore and discover many interesting patterns otherwise buried.
+			</div>
+			<div id='explainblurb'>
+				<div class='explainpanel'>
+					<img src='img/filter-select.jpg' width=190 height=220>
+					Choose filters for your data
+				</div>
+				<div class='explainpanel'>
+					<img src='img/axis-select.jpg' width=190 height=220>
+					Select which parts to examine
+				</div>
+				<div class='explainpanel'>
+					<img src='img/sub-select.jpg' width=190 height=220>
+					Subset data to your selection for finer detail
+				</div>
+			</div>
+			<div id='teaserblurb'>
+				Flying around the map of your selections, you can explore things like:
+				<div class='teaseritem'>
+					The City of Boston owns lots of property: can you find what types and where? What do these trends tell you?
+				</div>
+				<div class='teaseritem'> 
+					How expensive are residential accommodations in different parts of town, and where does the money go? What is the best value?
+				</div>
+				<div class='teaseritem' style='display:none'>
+					Are a region's commercial buildings owned by local, national, or international companies? How do those values compare?
+				</div>
+				<div class='teaseritem' style='display:none'>
+					Does Boston have areas that are more likely to pay rent vs. more likely to receive it?
+				</div>
+			</div>
+			<div id='closingblurb'  style='display:none'>
+				This tool is designed to be a fascinating way to find some things that challenge your expectations, and discover other things you may have never even considered!<br><span style='font-size: 12px'>(Quick! Guess the value of MGH!)</span>
+			</div>
+			<div id='footerbutton' onclick='togglePopup()'>
+				Start Exploring!
+			</div>
+
+		</div>
+
+	</div>
+</div>
 </body>
 <footer>
 <script>
