@@ -224,7 +224,7 @@ margin: auto;
 }
 
 .fancy-button.auto{
-  //color: rgb(56,123,158);
+  color: rgb(156, 156, 156);
   border-color: rgb(87,193,87);
 }
 .fancy-button:hover {
