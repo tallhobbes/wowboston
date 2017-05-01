@@ -57,6 +57,14 @@ var test;
 //total function
 ////async version
 var showLinks = function(linkIDs){
+  if(typeof(linkIDs) === 'undefined'){
+    //likely from button push - check if de-select auto
+    if(auto.render){
+      toggleAuto('render');
+      return(null);
+    }
+    linkIDs = brushdata.map(function(d2){return(d2.linkID)});
+  }
 	async.waterfall([
 		async.constant(linkIDs),
 		sortEntities,
@@ -64,7 +72,11 @@ var showLinks = function(linkIDs){
 		cullEntities,
     showEntities,
 		createEntities
-		]);
+		],function(){
+      if(auto.zoom){
+        viewer.flyTo(viewer.entities);
+      }
+    });
   //setTimeout(function(){viewer.flyTo(viewer.entities)}, 1000);
 }
 //take requested list of links and sort into present and missing links
@@ -148,16 +160,23 @@ var showEntities = function(currentLinks, missingLinks, cb){
   cb(null, missingLinks);
 }
 
-
+var zoomToEntities = function(){
+  if(auto.zoom){
+    toggleAuto('zoom');
+    return(null);
+  }
+  viewer.flyTo(viewer.entities);
+}
 
 //batch creation
-var createEntities = function(linkIDs){
+var createEntities = function(linkIDs, callback){
   console.log('entities.length is ',viewer.entities.values.length);
   //console.log('current entities are:', viewer.entities.values);
 	console.log('new entities length is:',linkIDs.length);
 	linkIDs.forEach(function(linkID){
 		createEntity(linkID);
 	});
+  callback(null);
 }  
 var stopCreation = false;
 //one-off creation

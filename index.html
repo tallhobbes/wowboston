@@ -26,32 +26,49 @@
 	
 </div>
 <div id='slidingPanel'>
-	<div id='pulltab' onclick='toggleSlidingPanel()'>
-		<div class='icon'><div style='text-align: center; width:30px'><i class="fa fa-chevron-up fa-1x"></i></div></div>
-		<div id='entityStats'>
-			<div>
-				Selected: <span id='entValSel'>0</span>  
-				Displayed: <span id='entValDisp'>0</span>  
-				Limit: <span id='entValLim'>1000</span>
+	<div id='pulltab'>
+		<div class='icon' onclick='toggleSlidingPanel()'><div style='text-align: center; width:30px'><i class="fa fa-chevron-up fa-1x"></i></div></div>
+		<div id='tab-details'>
+			<div id='entityStats'>
+				<div>
+					Limit: <span id='entValLim'>1000</span>
+					Displayed: <span id='entValDisp'>0</span>  
+					Selected: <span id='entValSel'>0</span>  
+				</div>
+			</div>
+			<div class='buttonset'>
+				<div class='button-label'> data
+					<div class='button-roof'>
+						<a class='fancy-button' style='width:70px' onclick='enhance(brushdata)'>Sub-Select</a>
+						<a class='fancy-button' onclick='enhance(fulldata)'>Reset</a>
+						<a id='filterbutton' style='width:70px'class='fancy-button' onclick='showDimensionPanel()'>Filters...</a>
+					</div>
+				</div>	
+			</div>
+			<div class='buttonset'>
+				<div class='button-label'> view
+					<div class='button-roof'>
+						<a id='renderbutton' style='width:100px' class='fancy-button auto' onclick='showLinks()' ondblclick="toggleAuto('render')">Render Selected</a>
+						<a class='fancy-button' onclick='hideEntities()'>Clear</a>
+						<a id='zoombutton' style='width:100px' class='fancy-button' onclick='zoomToEntities()' ondblclick="toggleAuto('zoom')">Zoom to Range</a>
+					</div>
+				</div>	
 			</div>
 		</div>
 	</div>
 	<div id='linesEtc'>
 		<div id="parchart" class='parcoords'></div>
-		<div id='buttonset'>
-			<button class='cesium-button cesium-button-toolbar' onclick='enhance(subdata)'>ENHANCE</button>
-			<button class='cesium-button cesium-button-toolbar' onclick='enhance(fulldata)'>reset</button>
-		</div>
 	</div>
 </div>
 
 <div id='dimensionSelectPanel' class='hide'>
-	<div id='dimensionList'>
+	<div id='dimensionList' class='pretty-scroll'>
 		<div class='dimensionItem'>
 			<div class='dimensionIcon'><i class='fa fa-check fa-1x'></i></div>
 			<div class='dimensionLabel' data-label='shorthand'>Labeliscious</div>
 		</div>
 	</div>
+	<div id='dimensionUpdateButton' class='fancy-button' onclick='activateNewDims()'>UPDATE</div>
 </div>
 
 </body>
