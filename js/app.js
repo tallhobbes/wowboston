@@ -40,6 +40,10 @@ var getEntityStat = function(stat){
     return(parseInt(document.getElementById(statDict[stat]).innerHTML));
 }
 
+var resizeParchart = function(){
+    pc.width(d3.select('#parchart')[0][0].clientWidth);
+    pc.render();
+}
 ////Run the shizzle
 window.onload = function(){
     console.log('yup');
@@ -58,6 +62,8 @@ window.onload = function(){
 }
 window.onresize = function(){
     setSlidingPanelHeight();
+    resizeParchart();
+
 }
 
 
