@@ -72,8 +72,8 @@ var	alldims = {
 	}
 }
 
-//var defaultFilters = ['MAILING_NEIGHBORHOOD','PropType','AV_TOTAL','own_av_tota','own_num_owned'];
-var defaultFilters = d3.keys(alldims).slice(0,5);
+var defaultFilters = ['MAILING_NEIGHBORHOOD','PropType','AV_TOTAL','own_num_owned','own_av_total'];
+//var defaultFilters = d3.keys(alldims).slice(0,5);
 
 defaultFilters.forEach(function(key){
 	dims[key] = alldims[key];
