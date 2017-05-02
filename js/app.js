@@ -75,18 +75,21 @@ var labelPart5 = '</div></div>';
 var labelhtml = [labelPart1, labelPart2, labelPart3, labelPart4, labelPart5];
 var listslug;
 var makeDimensionSelectList = function(){
-    var currentkeys = d3.keys(pc.dimensions()).sort();
+    var currentkeys = d3.keys(pc.dimensions());
+    // d3.keys(pc.dimensions()).forEach(function(key){
+    //     currentkeys[pc.dimensions()[key].index] = key;
+    // });
     var allkeys = d3.keys(alldims).sort();
     listslug = [];
     var htmlslug = '';
     currentkeys.forEach(function(key){
-        //htmlslug = htmlslug + makeDimensionListItem(key, true);
-        var title = alldims[key].title;
-        listslug[title] = makeDimensionListItem(key, true);
+        htmlslug = htmlslug + makeDimensionListItem(key, true);
+        // var title = alldims[key].title;
+        // listslug[title] = makeDimensionListItem(key, true);
     });
-    d3.keys(listslug).sort().forEach(function(title){
-        htmlslug = htmlslug+listslug[title];
-    });
+    // d3.keys(listslug).sort().forEach(function(title){
+    //     htmlslug = htmlslug+listslug[title];
+    // });
     listslug = [];
     allkeys.forEach(function(key){
         if(currentkeys.indexOf(key)===-1){

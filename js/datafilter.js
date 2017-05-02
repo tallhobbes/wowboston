@@ -5,44 +5,78 @@ var	alldims = {
 	"zip_prop_txt":{
 		axtype:'test',
 		scaletype:'ordinal',
-		title:'Property Zip Code',
+		title:'[P] Zip Code',
 		num_tics:10,
 	},
 	'AV_TOTAL':{
-		title:'Total Value',
+		title:'[P] Value - Overall',
+	},
+	'AV_LAND':{
+		title: '[P] Value - Land',
+	},
+	'AV_BLDG':{
+		title: '[P] Value - Building'
 	},
 	'zip_own_num':{
-		title:'Owner Zip Code',
+		title:'[O] Zip Code',
 		ticks: 10,
 		tickFormatCode: [20,'05'],
-
 	},
 	'MAILING_NEIGHBORHOOD':{
-		title: 'Neighborhood',
+		title: '[P] Neighborhood',
 		scaletype: 'ordinal',
 		flipscale: true
 	},
+	'LAND_SF':{
+		title: '[P] Parcel Area (ft2)'
+	},
 	'PropType':{
-		title:'Property Category',
+		title:'[P] Type - General',
 		scaletype: 'ordinal',
 		flipscale: true,
 
 	},
 	'LU_type':{
-		title:'Property Type',
+		title:'[P] Type - Detailed',
 		scaletype:'ordinal',
 		flipscale: true
 	},
 	'dist_mi':{
-		title: 'Owner Distance',
+		title: '[P] to [O] Distance (mi)',
+	},
+	'YR_BUILT':{
+		title:'[P] Year Built'
+	},
+	'view':{
+		title:'[P] View Rating',
+		scaletype: 'ordinal'
+	},
+	'own_num_owned':{
+		title:'[O] Total # Properties'
+	},
+	'own_av_land':{
+		title:'[O] Total Value - Land'
+	},
+	'own_av_bldg':{
+		title:'[O] Total Value - Buildings'
+	},
+	'own_av_total':{
+		title:'[O] Total Value - Overall'
+	},
+	'own_name':{
+		title: '[O] Name',
+		scaletype: 'ordinal',
+		num_tics: 10,
+		flipscale: true,
+		char_lim: 21
 	}
 }
 
-//var defaultFilters = ['AV_TOTAL','PropType'];
-var defaultFilters = d3.keys(alldims).slice(0,5);
-defaultFilters.forEach(function(key){
-	dims[key] = alldims[key];
-})
+var defaultFilters = ['MAILING_NEIGHBORHOOD','PropType','AV_TOTAL','own_av_tota','own_num_owned'];
+// var defaultFilters = d3.keys(alldims).slice(0,5);
+// defaultFilters.forEach(function(key){
+// 	dims[key] = alldims[key];
+// })
 //dims = alldims; 
 
 var selectDims = function(newDims, cb){
