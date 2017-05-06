@@ -97,7 +97,7 @@ var selectDims = function(newDims, cb){
 	callback(null);
 	},
 	function(){
-		console.log(newDims, oldDims);
+		//console.log(newDims, oldDims);
 		oldDims.forEach(function(dim){
 			delete dims[dim];
 		});
@@ -112,7 +112,7 @@ var selectDims = function(newDims, cb){
 }
 
 var redrawDims = function(dimset){
-	console.log(dimset);
+	//console.log(dimset);
 	dims = dimset;
 	pc.data(subdata)
 		.dimensions(dimset);
@@ -123,14 +123,14 @@ var redrawDims = function(dimset){
 }
 
 var updateDims = function(selected){
-	console.log('list in update dims from panel is: ', selected);
+	//console.log('list in update dims from panel is: ', selected);
 	selectDims(selected, redrawDims);
 }
 
 //random sampling to see if column is numbers stored as strings
 var numberCheck = function(data, key, n, threshold){
 	var n2 = n;
-	console.log(n2);
+	//console.log(n2);
 	var score = 0;
 	for(var i=0; i<n2; ++i){
 		console.log(i);
@@ -156,11 +156,11 @@ var modifyScales = function(data){
 		//set domains for type: if linear: min and max; if ordinal: all levels;
 		if(scaletype==='linear'){
 			newdomain = d3.extent(data, function(d){return +d[dim]});
-			console.log(dim+newdomain);
+			//console.log(dim+newdomain);
 		} else {
 			newdomain = d3.map(data, function(d){return d[dim];}).keys().sort();
 			if(thisdim.flipscale) newdomain = newdomain.reverse();
-			console.log(newdomain);
+			//console.log(newdomain);
 		}
 		//console.log(dim+newdomain);
 		////Setting variables
@@ -170,7 +170,7 @@ var modifyScales = function(data){
 			thisdim.yscale = d3.scale[scaletype]().domain(newdomain);
 			if(scaletype=='linear'){
 				thisdim.yscale.range([349,4]);
-				console.log(dim, newdomain);
+				//console.log(dim, newdomain);
 			} else {
 				thisdim.yscale.rangePoints([349,4]);
 			}
@@ -202,7 +202,7 @@ var modifyScales = function(data){
 				}));
 			}
 
-			console.log('tickvalues are',thisdim.yscale.tickValues);
+			//console.log('tickvalues are',thisdim.yscale.tickValues);
 		}
 	});
 
@@ -241,7 +241,7 @@ var renderPar = function(data){
 			//console.log('NumSelected = '+d.length.toString());
 			brushdata = d;
 			var links = d.map(function(d2){return(d2.linkID)});
-			console.log('d and full lengths are:', d.length, fulldata.length);
+			//console.log('d and full lengths are:', d.length, fulldata.length);
 			if(!(d.length == fulldata.length)){
 				if(auto.render){
 					showLinks(links);

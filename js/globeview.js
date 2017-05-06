@@ -18,21 +18,24 @@ var runCesium = function(){
   Cesium.Camera.DEFAULT_VIEW_RECTANGLE = homeRect;
   Cesium.Camera.DEFAULT_VIEW_FACTOR = 0.001;
   viewer = new Cesium.Viewer("cesiumContainer", {
-  timeline: false,
-  animation: false,
-  baseLayerPicker: false, // Only showing one layer in this demo
-  //useDefaultRenderLoop : false,
-  //homeButton:false,
-  fullscreenButton: false,
-  geocoder: false,
-  selectionIndicator: false,
-  infoBox: false,
-  sceneModePicker: false,
-  navigationHelpButton: true,
-  imageryProvider: basemapProvider,
-  navigationInstructionsInitiallyVisible: false,
-  skyAtmosphere: false,
-  scene3DOnly: true
+    timeline: false,
+    animation: false,
+    baseLayerPicker: false, // Only showing one layer in this demo
+    //useDefaultRenderLoop : false,
+    //homeButton:false,
+    contextOptions:{
+      webgl:{preserveDrawingBuffer: true}
+    },
+    fullscreenButton: false,
+    geocoder: false,
+    selectionIndicator: false,
+    infoBox: false,
+    sceneModePicker: false,
+    navigationHelpButton: true,
+    imageryProvider: basemapProvider,
+    navigationInstructionsInitiallyVisible: false,
+    skyAtmosphere: false,
+    scene3DOnly: true
 	});
   viewer.scene.globe.enableLighting = false;
 
@@ -170,9 +173,9 @@ var zoomToEntities = function(){
 
 //batch creation
 var createEntities = function(linkIDs, callback){
-  console.log('entities.length is ',viewer.entities.values.length);
+  //console.log('entities.length is ',viewer.entities.values.length);
   //console.log('current entities are:', viewer.entities.values);
-	console.log('new entities length is:',linkIDs.length);
+	//console.log('new entities length is:',linkIDs.length);
 	linkIDs.forEach(function(linkID){
 		createEntity(linkID);
 	});
@@ -197,7 +200,7 @@ var createEntity = function(linkID){
   //console.log(i+showit);
   //var d = link_dict[linkID];
   if(typeof(d.linkID)==='undefined'){
-    console.log('got null id')
+    //console.log('got null id')
     return(null);
   }
   viewer.entities.add({
@@ -222,7 +225,7 @@ var createEntity = function(linkID){
 var createLinkDict = function(){
 	//console.log('creating link dict');
   var report = function(){
-    console.log('linkDict done');
+    //console.log('linkDict done');
   }
 	d3.csv('../data/rental_links.csv', function(data){
 		//console.log(data[0]);
@@ -250,18 +253,18 @@ renderDone.cb = function(renders, cb){
     function(){return renderDone.completes > 10 },
     function(callback){    
       if(renderDone.state === true){
-        console.log('renders done: ',renderDone.completes);
+      //  console.log('renders done: ',renderDone.completes);
         renderDone.completes +=1;
         renderDone.state = false;
         callback(null, renderDone)
       } else{
-        console.log('no render info');
+      //  console.log('no render info');
         setTimeout(function(){callback(null, renderDone)},10);
       }
       
     },
     function(err){
-      console.log('whilst function is firing!',renderDone.completes);
+      //console.log('whilst function is firing!',renderDone.completes);
       cb();
     }
   );

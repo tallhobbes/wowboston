@@ -74,26 +74,26 @@
 	<div id='popupbox'>
 		<div id='popupcontents'>
 
-			<div id='logobanner'><img width='563px' height='172px' src='img/WOWlogo.png'></div>
+			<div id='logobanner'><img width='372px' height='114px' src='img/WOWlogo.png'></div>
 			<div id='openingblurb'>
-				By mapping and filtering the <a href='https://data.boston.gov/dataset/property-assessment/resource/062fc6fa-b5ff-4270-86cf-202225e40858'>Boston property assessment dataset</a> , you can use a simple relationship - Who Owns What? - to explore and discover many interesting patterns otherwise buried.
+				By mapping and filtering the <a href='https://data.boston.gov/dataset/property-assessment/resource/062fc6fa-b5ff-4270-86cf-202225e40858'>Boston property assessment dataset</a> , you can use a simple relationship - Who Owns What? - to explore and discover many interesting and otherwise hidden patterns.
 			</div>
 			<div id='explainblurb'>
 				<div class='explainpanel'>
-					<img src='img/filter-select.jpg' width=190 height=220>
+					<img src='img/filter-select.jpg' class='explainimg' >
 					Choose filters for your data
 				</div>
 				<div class='explainpanel'>
-					<img src='img/axis-select.jpg' width=190 height=220>
+					<img src='img/axis-select.jpg' class='explainimg' >
 					Select which parts to examine
 				</div>
 				<div class='explainpanel'>
-					<img src='img/sub-select.jpg' width=190 height=220>
+					<img src='img/sub-select.jpg' class='explainimg' >
 					Subset data to your selection for finer detail
 				</div>
 			</div>
 			<div id='teaserblurb'>
-				Flying around the map of your selections, you can explore things like:
+				Fly around the map of your selections and discover things like:
 				<div class='teaseritem'>
 					The City of Boston owns lots of property: can you find what types and where? What do these trends tell you?
 				</div>
@@ -117,6 +117,60 @@
 		</div>
 
 	</div>
+</div>
+<div id='sharebtn'>
+	<img src='img/share-icon-100.png' onclick='toggleSharePanel()' height=28px width=28px></img>
+</div>
+<div id='sharepanel' class='hide'>
+	<div id='share1' class=''>
+		<div class='title'>Share Observations</div>
+		<div class='subtitle'>Start a conversation! Share snapshots of your findings via Imgur.</div>
+		<div class='subtitle'>Choose which image(s) to share</div>
+		<div>
+			<div onclick="dimensionSelectClick(this)" class='sharechoice selected'>Map</div>
+			<div onclick="dimensionSelectClick(this)" class='sharechoice'>Filters</div>
+		</div>
+		<div >
+			<a href='#' style='float:left' id='showPrevLinks' onclick='togglePrevPanel()' class=''>Show Prior Uploads</a>
+			<div style='float:right' id='upload1' onclick='up_step1()' class='fancy-button'>next</div>
+		</div>
+	</div>
+	<div id='share2' class='hide'>
+		<div class='subtitle'>
+			Add a title and/or description for your images (optional)
+		</div>
+		<div>
+			<input id='input_title'type='text' placeholder='Title'></input>
+		</div>
+		<div>
+			<textarea id='input_desc' class='pretty-scroll' placeholder='Description text...'></textarea>
+		</div>
+		<div >
+			<div style='float:left' id='upload2' onclick='up_cancel()' class='fancy-button'>cancel</div>
+			<div style='float:right' id='upload2' onclick='up_step2()' class='fancy-button'>upload!</div>
+		</div>
+	</div>
+	<div id='share_waiting' class='hide'>
+		<div class='wait_msg'>
+			<div>
+				<i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
+			</div>
+			<div>
+				Uploading to Imgur...
+			</div>
+		</div>
+	</div>
+	<div id='share3' class='hide'>
+		<div class='title'>Upload Complete!</div>
+		<div id='newuploads'></div>
+		<div class='subtitle'>Tweet us @wowbos !</div>
+	</div>
+	<div id='prevShares' class='hide'>
+		<div class='subtitle'>Previous Links</div>
+		<div id='prevLinkList' class='pretty-scroll'></div>
+	</div>
+
+
 </div>
 </body>
 <footer>
