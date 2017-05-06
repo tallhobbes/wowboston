@@ -188,7 +188,7 @@ var uploadPic = function(outpic, title, desc) {
     if(typeof(desc)==='undefined'){
         desc='';
     }
-    //desc = desc+" [via WOWboston.space]";
+    desc = desc+" [via WOWboston.space]";
     var xmlhttp = new XMLHttpRequest();
     var url = "https://api.imgur.com/3/image";
     xmlhttp.open("POST", url, true);
