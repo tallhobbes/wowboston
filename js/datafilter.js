@@ -1,83 +1,136 @@
-var pc,dims,fulldata,subdata,range;
+var pc,fulldata,subdata,brushdata, range;
+var dims = {};
 
 var	alldims = {
 	"zip_prop_txt":{
 		axtype:'test',
 		scaletype:'ordinal',
-		title:'Property Zip Code',
+		title:'[P] Zip Code',
 		num_tics:10,
 	},
 	'AV_TOTAL':{
-		title:'Total Value',
+		title:'[P] Value - Overall',
+	},
+	'AV_LAND':{
+		title: '[P] Value - Land',
+	},
+	'AV_BLDG':{
+		title: '[P] Value - Building'
 	},
 	'zip_own_num':{
-		title:'Owner Zip Code',
+		title:'[O] Zip Code',
 		ticks: 10,
 		tickFormatCode: [20,'05'],
-
 	},
 	'MAILING_NEIGHBORHOOD':{
-		title: 'Neighborhood',
+		title: '[P] Neighborhood',
 		scaletype: 'ordinal',
 		flipscale: true
 	},
+	'LAND_SF':{
+		title: '[P] Parcel Area (ft2)'
+	},
 	'PropType':{
-		title:'Property Category',
+		title:'[P] Type - General',
 		scaletype: 'ordinal',
 		flipscale: true,
 
 	},
 	'LU_type':{
-		title:'Property Type',
+		title:'[P] Type - Detailed',
 		scaletype:'ordinal',
 		flipscale: true
 	},
 	'dist_mi':{
-		title: 'Owner Distance',
+		title: '[P] to [O] Distance (mi)',
+	},
+	'YR_BUILT':{
+		title:'[P] Year Built'
+	},
+	'view':{
+		title:'[P] View Rating',
+		scaletype: 'ordinal'
+	},
+	'own_num_owned':{
+		title:'[O] Total # Properties'
+	},
+	'own_av_land':{
+		title:'[O] Total Value - Land'
+	},
+	'own_av_bldg':{
+		title:'[O] Total Value - Buildings'
+	},
+	'own_av_total':{
+		title:'[O] Total Value - Overall'
+	},
+	'own_name':{
+		title: '[O] Name',
+		scaletype: 'ordinal',
+		num_tics: 10,
+		flipscale: true,
+		char_lim: 21
 	}
 }
 
-dims = alldims; 
+var defaultFilters = ['MAILING_NEIGHBORHOOD','PropType','AV_TOTAL','own_num_owned','own_av_total'];
+//var defaultFilters = d3.keys(alldims).slice(0,5);
+
+defaultFilters.forEach(function(key){
+	dims[key] = alldims[key];
+})
+//dims = alldims; 
 
 var selectDims = function(newDims, cb){
 	var currentDims = d3.keys(dims);
 	var oldDims = currentDims;
 	//treat selected list as to-add list
 	//eliminate selected variables that are already in dims
-	currentDims.forEach(function(dim){
+	async.eachSeries(currentDims, function(dim, callback){
 		var index = newDims.indexOf(dim);
 		if(index > -1){
 			//if selected dim is already present in graphed dims, eliminate from to-add list
 			newDims = newDims.slice(0,index).concat(newDims.slice(index+1, newDims.length));
 			//as well as from to-delete list
-			oldDims = oldDims.slice(0,index).concat(oldDims.slice(index+1, oldDims.length));
+			var oldIndex = oldDims.indexOf(dim);
+			oldDims = oldDims.slice(0,oldIndex).concat(oldDims.slice(oldIndex+1, oldDims.length));
 		}
-	});
-	oldDims.forEach(function(dim){
-		delete dims[dim];
+	callback(null);
+	},
+	function(){
+		//console.log(newDims, oldDims);
+		oldDims.forEach(function(dim){
+			delete dims[dim];
+		});
+
+		newDims.forEach(function(dim){
+			dims[dim] = alldims[dim];
+		});
 	});
 
-	newDims.forEach(function(dim){
-		dims[dim] = alldims[dim];
-	});
+	//console.log(dims);
 	cb(dims);
 }
 
 var redrawDims = function(dimset){
+	//console.log(dimset);
 	dims = dimset;
-	pc.dimensions(dims);
-	pc.createAxes();
-	pc.render();
+	pc.data(subdata)
+		.dimensions(dimset);
+	modifyScales(subdata);
+	pc.render()
+		.brushMode('1D-axes')
+		.updateAxes(50);
 }
 
 var updateDims = function(selected){
+	//console.log('list in update dims from panel is: ', selected);
 	selectDims(selected, redrawDims);
 }
 
 //random sampling to see if column is numbers stored as strings
 var numberCheck = function(data, key, n, threshold){
 	var n2 = n;
-	console.log(n2);
+	//console.log(n2);
 	var score = 0;
 	for(var i=0; i<n2; ++i){
 		console.log(i);
@@ -103,11 +156,11 @@ var modifyScales = function(data){
 		//set domains for type: if linear: min and max; if ordinal: all levels;
 		if(scaletype==='linear'){
 			newdomain = d3.extent(data, function(d){return +d[dim]});
-			console.log(dim+newdomain);
+			//console.log(dim+newdomain);
 		} else {
 			newdomain = d3.map(data, function(d){return d[dim];}).keys().sort();
 			if(thisdim.flipscale) newdomain = newdomain.reverse();
-			console.log(newdomain);
+			//console.log(newdomain);
 		}
 		//console.log(dim+newdomain);
 		////Setting variables
@@ -117,7 +170,7 @@ var modifyScales = function(data){
 			thisdim.yscale = d3.scale[scaletype]().domain(newdomain);
 			if(scaletype=='linear'){
 				thisdim.yscale.range([349,4]);
-				console.log(dim, newdomain);
+				//console.log(dim, newdomain);
 			} else {
 				thisdim.yscale.rangePoints([349,4]);
 			}
@@ -149,7 +202,7 @@ var modifyScales = function(data){
 				}));
 			}
 
-			console.log('tickvalues are',thisdim.yscale.tickValues);
+			//console.log('tickvalues are',thisdim.yscale.tickValues);
 		}
 	});
 
@@ -157,6 +210,10 @@ var modifyScales = function(data){
 
 
 var enhance = function(d){
+	if(typeof(d)==='undefined'){
+		console.log('undefined d');
+	}
+	subdata = d;
 	pc.data(d);
 	modifyScales(d);
 	pc.render();
@@ -165,7 +222,7 @@ var enhance = function(d){
 //var pc = d3.parcoords({nullValueSeparator:'bottom'})('#parchart');
 
 var renderPar = function(data){
-	fulldata = data;
+	fulldata = subdata = data;
 	//console.log(data[0]);
 	modifyScales(data);
 
@@ -181,12 +238,14 @@ var renderPar = function(data){
 			setEntityStat('sel',d.length);
 		})
 		.on('brushend', function(d){
-			console.log('NumSelected = '+d.length.toString());
-			subdata = d;
+			//console.log('NumSelected = '+d.length.toString());
+			brushdata = d;
 			var links = d.map(function(d2){return(d2.linkID)});
-			console.log('d and full lengths are:', d.length, fulldata.length);
+			//console.log('d and full lengths are:', d.length, fulldata.length);
 			if(!(d.length == fulldata.length)){
-				showLinks(links);
+				if(auto.render){
+					showLinks(links);
+				}
 			}else{
 				setEntityStat('sel',0);
 			}

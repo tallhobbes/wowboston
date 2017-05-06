@@ -1,6 +1,6 @@
 <!DOCTYPE <html>
 <head>
-	<title>serf boston</title>
+	<title>W.O.W. Boston</title>
 	<link rel='stylesheet' href='css/d3.parcoords.css'>
 	<link rel='stylesheet' href='css/widgets.css'>
 	<link rel='stylesheet' href='css/style.css'>
@@ -23,36 +23,166 @@
 <div id="cesiumContainer">
 </div>
 <div id='topStrip'>
-	
+	<div id='lillogo' onclick='togglePopup()'><img src='img/WOWlogo-noArrow.png' width=132px height=30px></div>
 </div>
 <div id='slidingPanel'>
-	<div id='pulltab' onclick='toggleSlidingPanel()'>
-		<div class='icon'><div style='text-align: center; width:30px'><i class="fa fa-chevron-up fa-1x"></i></div></div>
-		<div id='entityStats'>
-			<div>
-				Selected: <span id='entValSel'>0</span>  
-				Displayed: <span id='entValDisp'>0</span>  
-				Limit: <span id='entValLim'>1000</span>
+	<div id='pulltab'>
+		<div class='icon' onclick='toggleSlidingPanel()'><div style='text-align: center; width:30px'><i class="fa fa-chevron-up fa-1x"></i></div></div>
+		<div id='tab-details'>
+			<div id='entityStats'>
+				<div>
+					Limit: <span id='entValLim'>1000</span>
+					Displayed: <span id='entValDisp'>0</span>  
+					Selected: <span id='entValSel'>0</span>  
+				</div>
+			</div>
+			<div class='buttonset'>
+				<div class='button-label'> data
+					<div class='button-roof'>
+						<a class='fancy-button' style='width:70px' onclick='enhance(brushdata)'>Sub-Select</a>
+						<a class='fancy-button' onclick='enhance(fulldata)'>Reset</a>
+						<a id='filterbutton' style='width:70px'class='fancy-button' onclick='showDimensionPanel()'>Filters...</a>
+					</div>
+				</div>	
+			</div>
+			<div class='buttonset'>
+				<div class='button-label'> view
+					<div class='button-roof'>
+						<a id='renderbutton' style='width:100px' class='fancy-button auto' onclick='showLinks()' ondblclick="toggleAuto('render')">Render Selected</a>
+						<a class='fancy-button' onclick='hideAll()'>Clear</a>
+						<a id='zoombutton' style='width:100px' class='fancy-button' onclick='zoomToEntities()' ondblclick="toggleAuto('zoom')">Zoom to Range</a>
+					</div>
+				</div>	
 			</div>
 		</div>
 	</div>
 	<div id='linesEtc'>
 		<div id="parchart" class='parcoords'></div>
-		<div id='buttonset'>
-			<button class='cesium-button cesium-button-toolbar' onclick='enhance(subdata)'>ENHANCE</button>
-			<button class='cesium-button cesium-button-toolbar' onclick='enhance(fulldata)'>reset</button>
-		</div>
 	</div>
 </div>
 
 <div id='dimensionSelectPanel' class='hide'>
-	<div id='dimensionList'>
+	<div id='dimensionList' class='pretty-scroll'>
 		<div class='dimensionItem'>
 			<div class='dimensionIcon'><i class='fa fa-check fa-1x'></i></div>
 			<div class='dimensionLabel' data-label='shorthand'>Labeliscious</div>
 		</div>
 	</div>
+	<div id='dimensionUpdateButton' class='fancy-button' onclick='activateNewDims()'>UPDATE</div>
 </div>
+<div id='popupbg' class='show'>
+	<div id='popupbox'>
+		<div id='popupcontents'>
 
+			<div id='logobanner'><img width='372px' height='114px' src='img/WOWlogo.png'></div>
+			<div id='openingblurb'>
+				By mapping and filtering the <a href='https://data.boston.gov/dataset/property-assessment/resource/062fc6fa-b5ff-4270-86cf-202225e40858'>Boston property assessment dataset</a>, you can use a simple relationship - Who Owns What? - to explore and discover many interesting and otherwise hidden patterns.
+			</div>
+			<div id='explainblurb'>
+				<div class='explainpanel'>
+					<img src='img/filter-select.jpg' class='explainimg' >
+					Choose filters for your data
+				</div>
+				<div class='explainpanel'>
+					<img src='img/axis-select.jpg' class='explainimg' >
+					Select which parts to examine
+				</div>
+				<div class='explainpanel'>
+					<img src='img/sub-select.jpg' class='explainimg' >
+					Subset data to your selection for finer detail
+				</div>
+			</div>
+			<div id='teaserblurb'>
+				Fly around the map of your selections and discover things like:
+				<div class='teaseritem'>
+					The City of Boston owns lots of property: can you find what types and where? What do these trends tell you?
+				</div>
+				<div class='teaseritem'> 
+					How expensive are residential accommodations in different parts of town, and where does the money go? What is the best value?
+				</div>
+				<div class='teaseritem' style='display:none'>
+					Are a region's commercial buildings owned by local, national, or international companies? How do those values compare?
+				</div>
+				<div class='teaseritem' style='display:none'>
+					Does Boston have areas that are more likely to pay rent vs. more likely to receive it?
+				</div>
+			</div>
+			<div id='closingblurb'  style='display:none'>
+				This tool is designed to be a fascinating way to find some things that challenge your expectations, and discover other things you may have never even considered!<br><span style='font-size: 12px'>(Quick! Guess the value of MGH!)</span>
+			</div>
+			<div id='footerbutton' onclick='togglePopup()'>
+				Start Exploring!
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<div id='sharebtn'>
+	<img src='img/share-icon-100.png' onclick='toggleSharePanel()' height=28px width=28px></img>
+</div>
+<div id='sharepanel' class='hide'>
+	<div id='share1' class=''>
+		<div class='title'>Share Observations</div>
+		<div class='subtitle'>Start a conversation! Share snapshots of your findings via Imgur.</div>
+		<div class='subtitle'>Choose which image(s) to share</div>
+		<div>
+			<div onclick="dimensionSelectClick(this)" class='sharechoice selected'>Map</div>
+			<div onclick="dimensionSelectClick(this)" class='sharechoice'>Filters</div>
+		</div>
+		<div >
+			<a href='#' style='float:left' id='showPrevLinks' onclick='togglePrevPanel()' class=''>Show Prior Uploads</a>
+			<div style='float:right' id='upload1' onclick='up_step1()' class='fancy-button'>next</div>
+		</div>
+	</div>
+	<div id='share2' class='hide'>
+		<div class='subtitle'>
+			Add a title and/or description for your images (optional)
+		</div>
+		<div>
+			<input id='input_title'type='text' placeholder='Title'></input>
+		</div>
+		<div>
+			<textarea id='input_desc' class='pretty-scroll' placeholder='Description text...'></textarea>
+		</div>
+		<div >
+			<div style='float:left' id='upload2' onclick='up_cancel()' class='fancy-button'>cancel</div>
+			<div style='float:right' id='upload2' onclick='up_step2()' class='fancy-button'>upload!</div>
+		</div>
+	</div>
+	<div id='share_waiting' class='hide'>
+		<div class='wait_msg'>
+			<div>
+				<i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
+			</div>
+			<div>
+				Uploading to Imgur...
+			</div>
+		</div>
+	</div>
+	<div id='share3' class='hide'>
+		<div class='title'>Upload Complete!</div>
+		<div id='newuploads'></div>
+		<div class='subtitle'>Tweet us @wowbos !</div>
+	</div>
+	<div id='prevShares' class='hide'>
+		<div class='subtitle'>Previous Links</div>
+		<div id='prevLinkList' class='pretty-scroll'></div>
+	</div>
+
+
+</div>
 </body>
+<footer>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-98324506-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</footer>
 </html>

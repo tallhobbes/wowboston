@@ -2421,8 +2421,8 @@ function position(d) {
 // (so you can choose to save it to disk, etc.)
 pc.mergeParcoords = function(callback) {
   // Retina display, etc.
-  var devicePixelRatio = window.devicePixelRatio || 1;
-
+  //var devicePixelRatio = window.devicePixelRatio || 1;
+  var devicePixelRatio = 1;
   // Create a canvas element to store the merged canvases
   var mergedCanvas = document.createElement("canvas");
   mergedCanvas.width = pc.canvas.foreground.clientWidth * devicePixelRatio

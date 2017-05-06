@@ -13,12 +13,19 @@ Cesium.InfoBoxViewModel.defaultSanitizer = function(rawHtml) {
 
 
 var runCesium = function(){
-    viewer = new Cesium.Viewer("cesiumContainer", {
+  var homeRect = Cesium.Rectangle.fromDegrees(-71.23, 42.215, -70.997, 42.4);
+
+  Cesium.Camera.DEFAULT_VIEW_RECTANGLE = homeRect;
+  Cesium.Camera.DEFAULT_VIEW_FACTOR = 0.001;
+  viewer = new Cesium.Viewer("cesiumContainer", {
     timeline: false,
     animation: false,
     baseLayerPicker: false, // Only showing one layer in this demo
     //useDefaultRenderLoop : false,
     //homeButton:false,
+    contextOptions:{
+      webgl:{preserveDrawingBuffer: true}
+    },
     fullscreenButton: false,
     geocoder: false,
     selectionIndicator: false,
@@ -29,23 +36,23 @@ var runCesium = function(){
     navigationInstructionsInitiallyVisible: false,
     skyAtmosphere: false,
     scene3DOnly: true
-  	});
-    viewer.scene.globe.enableLighting = false;
+	});
+  viewer.scene.globe.enableLighting = false;
 
 
-    var terrainProvider = new Cesium.CesiumTerrainProvider({
-        url: '//assets.agi.com/stk-terrain/world',
-        credit: '',
-        requestWaterMask: true
-    });
-    //viewer.terrainProvider = terrainProvider;
+  var terrainProvider = new Cesium.CesiumTerrainProvider({
+      url: '//assets.agi.com/stk-terrain/world',
+      credit: '',
+      requestWaterMask: true
+  });
+  //viewer.terrainProvider = terrainProvider;
 
-    viewer.scene.globe.depthTestAgainstTerrain = false;
+  viewer.scene.globe.depthTestAgainstTerrain = false;
 
-    viewer.scene.frameState.creditDisplay._imageContainer.style.display = 'none';
-    viewer.scene.frameState.creditDisplay._textContainer.style.display = 'none';
+  viewer.scene.frameState.creditDisplay._imageContainer.style.display = 'none';
+  viewer.scene.frameState.creditDisplay._textContainer.style.display = 'none';
 
-    linematerial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.WHITE.withAlpha(.3))
+  linematerial = new Cesium.PolylineArrowMaterialProperty(Cesium.Color.WHITE.withAlpha(.3))
 
 }
 var test;
@@ -53,6 +60,14 @@ var test;
 //total function
 ////async version
 var showLinks = function(linkIDs){
+  if(typeof(linkIDs) === 'undefined'){
+    //likely from button push - check if de-select auto
+    if(auto.render){
+      toggleAuto('render');
+      return(null);
+    }
+    linkIDs = brushdata.map(function(d2){return(d2.linkID)});
+  }
 	async.waterfall([
 		async.constant(linkIDs),
 		sortEntities,
@@ -60,8 +75,12 @@ var showLinks = function(linkIDs){
 		cullEntities,
     showEntities,
 		createEntities
-		]);
-  setTimeout(function(){viewer.flyTo(viewer.entities)}, 1000);
+		],function(){
+      if(auto.zoom){
+        viewer.flyTo(viewer.entities);
+      }
+    });
+  //setTimeout(function(){viewer.flyTo(viewer.entities)}, 1000);
 }
 //take requested list of links and sort into present and missing links
 var sortEntities = function(linkIDs,cb){
@@ -144,16 +163,23 @@ var showEntities = function(currentLinks, missingLinks, cb){
   cb(null, missingLinks);
 }
 
-
+var zoomToEntities = function(){
+  if(auto.zoom){
+    toggleAuto('zoom');
+    return(null);
+  }
+  viewer.flyTo(viewer.entities);
+}
 
 //batch creation
-var createEntities = function(linkIDs){
-  console.log('entities.length is ',viewer.entities.values.length);
+var createEntities = function(linkIDs, callback){
+  //console.log('entities.length is ',viewer.entities.values.length);
   //console.log('current entities are:', viewer.entities.values);
-	console.log('new entities length is:',linkIDs.length);
+	//console.log('new entities length is:',linkIDs.length);
 	linkIDs.forEach(function(linkID){
 		createEntity(linkID);
 	});
+  callback(null);
 }  
 var stopCreation = false;
 //one-off creation
@@ -174,7 +200,7 @@ var createEntity = function(linkID){
   //console.log(i+showit);
   //var d = link_dict[linkID];
   if(typeof(d.linkID)==='undefined'){
-    console.log('got null id')
+    //console.log('got null id')
     return(null);
   }
   viewer.entities.add({
@@ -199,7 +225,7 @@ var createEntity = function(linkID){
 var createLinkDict = function(){
 	//console.log('creating link dict');
   var report = function(){
-    console.log('linkDict done');
+    //console.log('linkDict done');
   }
 	d3.csv('//bostondata2.azureedge.net/bostondata/data/rental_links.csv', function(data){
 		//console.log(data[0]);
@@ -227,18 +253,18 @@ renderDone.cb = function(renders, cb){
     function(){return renderDone.completes > 10 },
     function(callback){    
       if(renderDone.state === true){
-        console.log('renders done: ',renderDone.completes);
+      //  console.log('renders done: ',renderDone.completes);
         renderDone.completes +=1;
         renderDone.state = false;
         callback(null, renderDone)
       } else{
-        console.log('no render info');
+      //  console.log('no render info');
         setTimeout(function(){callback(null, renderDone)},10);
       }
       
     },
     function(err){
-      console.log('whilst function is firing!',renderDone.completes);
+      //console.log('whilst function is firing!',renderDone.completes);
       cb();
     }
   );
@@ -257,4 +283,10 @@ var delTest = function(){
   function(){
     console.log('afterwards entity length is:', viewer.entities.values.length);
   }]);
+}
+
+var hideAll = function(){
+  viewer.entities.values.forEach(function(ent){
+    ent.show=false;
+  })
 }
