@@ -366,18 +366,18 @@ margin: auto;
 }
 #teaserblurb{
   width: 660px;
-  margin: 10px auto 5px;
+  margin: 10px auto 3px;
   font-size: 18px;
-  line-height: 1.8em;
+  line-height: 1em;
   border: 0px;
   border-bottom: 0px;
   border-style: solid;
-  padding-bottom: 3px;
+  padding-bottom: 7px;
   text-align: center;
 }
 .teaseritem{
   text-align: left;
-  padding: 5px 15px;
+  padding: 10px 15px 0px;
   line-height: 1.15em;
   font-size: 15px;
   width: 530px;
