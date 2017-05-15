@@ -309,7 +309,14 @@ margin: auto;
   left: 50%;
   margin: -330px 0 0 -350px;
   background-color: rgba(42,42,42,.9);
+  background: -webkit-linear-gradient(rgba(64,64,64,.9),rgba(42,42,42,.9)); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(rgba(64,64,64,.9),rgba(42,42,42,.9)); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(rgba(64,64,64,.9),rgba(42,42,42,.9)); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(rgba(64,64,64,.9),rgba(42,42,42,.9)); /* Standard syntax */
   border-radius: 10px;
+  border-style: solid;
+  border-color: rgba(90,90,90,.8);
+  border-width: 3px 0px;
   color:white;
 }
 
@@ -363,15 +370,15 @@ margin: auto;
   font-size: 18px;
   line-height: 1.8em;
   border: 0px;
-  border-top: 1px;
+  border-bottom: 0px;
   border-style: solid;
-  padding-bottom: 5px;
+  padding-bottom: 3px;
   text-align: center;
 }
 .teaseritem{
   text-align: left;
-  padding: 3px 15px;
-  line-height: 1em;
+  padding: 5px 15px;
+  line-height: 1.15em;
   font-size: 15px;
   width: 530px;
   margin: 0px auto;
