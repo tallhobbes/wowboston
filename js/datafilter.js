@@ -262,6 +262,7 @@ var runParChart = function(){
 	
 	// d3.csv('../data/lilparallel.csv', function(data){
 	d3.csv('../data/rental_filters.csv', function(data){
+	//d3.csv('//bostondata4.azureedge.net/bostondata/data/rental_filters.csv', function(data){
 		renderPar(data);
 	});
 }
